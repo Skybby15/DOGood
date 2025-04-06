@@ -8,7 +8,7 @@ const app=express();
 app.use(cors());
 
 app.get("/", (req, res)=>{
-    res.send("Server is ready");
+    res.send("Server is ready lol");
 });
 
 
