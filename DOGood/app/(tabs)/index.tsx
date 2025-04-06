@@ -1,15 +1,37 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, TextInput } from 'react-native';
+import { useState } from 'react';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import axios from 'axios';
 
 export default function TabOneScreen() {
+  const [mesaj, setMesaj] = useState("");
+
+  const handleClick = async ()=>{
+    console.log(mesaj);
+    try{
+      const response = await axios.post('http://localhost:5000/messages', {
+        mesaj: mesaj
+      });
+
+      if(response.data.success){
+
+      }
+    }catch(error){
+      
+    }
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <div>
+      <input
+        type="text"
+        value={mesaj}
+        onChange={(e) => setMesaj(e.target.value)}  // Actualizează mesajul
+      />
+      <button onClick={handleClick}>Trimite</button> {/* Asociază funcția handleClick */}
+    </div>
   );
 }
 
