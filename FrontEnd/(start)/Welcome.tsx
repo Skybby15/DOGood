@@ -1,30 +1,24 @@
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Image, ImageBackground} from 'react-native';
 import { StyleSheet } from 'react-native';
 import Login from './Login';
 
 export default function Welcome() {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>DOGood</Text>
-      </View>
-      <Login/>
+      <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={2} style={{flex: 1}}>
+        <Image source={require('../assets/logo/White-Logo-DG-Transparent.png')}
+          style={styles.logo}
+        ></Image>
+      </ImageBackground>
     </SafeAreaView>
-
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    backgroundColor: '#FF1',
-    flex: 0.10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#000',
-  },
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: 'flex-start',
+    marginTop: 20,
+  }
 });
