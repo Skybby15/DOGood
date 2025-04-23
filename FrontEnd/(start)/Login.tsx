@@ -3,26 +3,18 @@ import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-native-toast-message';
+import { useAuthUserStore } from '../store/authUser';
 
-function onPressLogin(email,password) {
-    console.log('Log in button pressed');
-    console.log('Email:', email);
-    console.log('Password:', password);
-}
-
-function onPressSignUp() {
-    console.log('Sign up button pressed');
-}
-
-function onPressGoogle(email,password) {
-    console.log('Google button pressed');
-    console.log('Email:', email);
-    console.log('Password:', password);
-}
 
 export default function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const { login } = useAuthUserStore();
+
+    const handleLogin = async() =>{
+        login({email, password});
+    }
 
     return (
         <View style={styles.container}>
@@ -52,7 +44,7 @@ export default function Login(){
                     styles.loginButton,
                     pressed && styles.ButtonPressed,
                 ]}
-                onPress={() => onPressLogin(email,password)}>
+                onPress={handleLogin}>
                 <Text style={{color: '#FFF'}}>Log in</Text>
             </Pressable>
 
@@ -67,7 +59,7 @@ export default function Login(){
                     styles.signUpButton,
                     pressed && styles.ButtonPressed,
                 ]}
-                onPress={onPressSignUp}>
+                onPress={()=>{}}>
                     
                 <Text>Sign up</Text>
             </Pressable>
@@ -77,7 +69,7 @@ export default function Login(){
                     styles.googleButton,
                     pressed && styles.ButtonPressed,
                 ]}
-                onPress={() => onPressGoogle(email, password)}>
+                onPress={() => {}}>
                     
                 <Text>Continue with google</Text>
             </Pressable>
@@ -106,6 +98,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 5,
         width: '90%',
+        //am adaugat height ca se vedea ingust pe telefon
+        height: '4%',
         marginBottom: 10,
     },
     infoText: {
