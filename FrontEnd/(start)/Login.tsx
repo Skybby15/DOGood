@@ -35,7 +35,7 @@ export default function Login() {
         ></Image>
         <View style={styles.container}>
                     <Text style={styles.header}>Log in to DOGood</Text>
-        
+
                     <Text style={styles.infoText}>
                         Email or Username
                     </Text>
