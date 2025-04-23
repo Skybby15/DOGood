@@ -1,165 +1,186 @@
-import {View, Text, TextInput, Pressable} from 'react-native';
+import {View, Image, ImageBackground,Text, TextInput, Pressable} from 'react-native';
 import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import axios from 'axios';
-import toast from 'react-native-toast-message';
 
-function onPressLogin(email,password) {
-    console.log('Log in button pressed');
-    console.log('Email:', email);
-    console.log('Password:', password);
-}
-
-function onPressSignUp() {
-    console.log('Sign up button pressed');
-}
-
-function onPressGoogle(email,password) {
-    console.log('Google button pressed');
-    console.log('Email:', email);
-    console.log('Password:', password);
-}
-
-export default function Login(){
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    return (
+    function onPressLogin() {
+        console.log('Log in button pressed');
+        console.log('Email:', email);
+        console.log('Password:', password);
+    }
+    
+    function onPressSignUp() {
+        console.log('Sign up button pressed');
+
+        navigator.navigate('SignUp');
+    }
+    
+    function onPressGoogle() {
+        console.log('Google button pressed');
+        console.log('Email:', email);
+        console.log('Password:', password);
+    }
+
+
+  const navigator = useNavigation();
+  return (
+    <View style={{flex: 1}}>
+      <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={1} style={styles.backgroundImage}>
+        <Image source={require('../assets/logo/White-Logo-DG-Transparent.png')}
+          style={styles.logo}
+        ></Image>
         <View style={styles.container}>
-            <Text style={styles.header}>Log in to DOGood</Text>
+                    <Text style={styles.header}>Log in to DOGood</Text>
+        
+                    <Text style={styles.infoText}>
+                        Email or Username
+                    </Text>
+                    <TextInput id='email/username' 
+                        style={styles.input} 
+                        onChangeText={setEmail} 
+                        value={email}
+                    />
+        
+                    <Text style={styles.infoText}>
+                        Password
+                    </Text>
+                    <TextInput id='Password' 
+                        style={styles.input}
+                        secureTextEntry={true}
+                        onChangeText={setPassword} 
+                        value={password}
+                    />
+        
+                    <Pressable id = 'loginButton'
+                        style={({ pressed }) => [
+                            styles.loginButton,
+                            pressed && styles.ButtonPressed,
+                        ]}
+                        onPress={onPressLogin}>
+                        <Text style={{color: '#FFF'}}>Log in</Text>
+                    </Pressable>
+        
+                    <View style={styles.lineWithText}>
+                        <View style={styles.line} />
+                        <Text style={styles.lineText}>OR</Text>
+                        <View style={styles.line} />
+                    </View>
+        
+                    <Pressable id='signUpButton'
+                        style={({ pressed }) => [
+                            styles.signUpButton,
+                            pressed && styles.ButtonPressed,
+                        ]}
+                        onPress={onPressSignUp}>
+                            
+                        <Text>Sign up</Text>
+                    </Pressable>
+        
+                    <Pressable id='googleButton'
+                        style={({ pressed }) => [
+                            styles.googleButton,
+                            pressed && styles.ButtonPressed,
+                        ]}
+                        onPress={onPressGoogle}>
+                            
+                        <Text>Continue with google</Text>
+                    </Pressable>
+                </View>
+      </ImageBackground>
+    </View>
+  );
 
-            <Text style={styles.infoText}>
-                Email or Username
-            </Text>
-            <TextInput id='email/username' 
-                style={styles.input} 
-                onChangeText={setEmail} 
-                value={email}
-            />
-
-            <Text style={styles.infoText}>
-                Password
-            </Text>
-            <TextInput id='Password' 
-                style={styles.input}
-                secureTextEntry={true}
-                onChangeText={setPassword} 
-                value={password}
-            />
-
-            <Pressable id = 'loginButton'
-                style={({ pressed }) => [
-                    styles.loginButton,
-                    pressed && styles.ButtonPressed,
-                ]}
-                onPress={() => onPressLogin(email,password)}>
-                <Text style={{color: '#FFF'}}>Log in</Text>
-            </Pressable>
-
-            <View style={styles.lineWithText}>
-                <View style={styles.line} />
-                <Text style={styles.lineText}>OR</Text>
-                <View style={styles.line} />
-            </View>
-
-            <Pressable id='signUpButton'
-                style={({ pressed }) => [
-                    styles.signUpButton,
-                    pressed && styles.ButtonPressed,
-                ]}
-                onPress={onPressSignUp}>
-                    
-                <Text>Sign up</Text>
-            </Pressable>
-
-            <Pressable id='googleButton'
-                style={({ pressed }) => [
-                    styles.googleButton,
-                    pressed && styles.ButtonPressed,
-                ]}
-                onPress={() => onPressGoogle(email, password)}>
-                    
-                <Text>Continue with google</Text>
-            </Pressable>
-        </View>
-    );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 50,
-        alignItems: 'center',
-    },
+  backgroundImage:{
+    flex: 1,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: 'flex-start',
+    marginTop: 20,
+  },
 
-    header:{
-        fontSize: 25,
-        fontWeight: '900',
-        marginBottom: 20,
-        marginLeft: 10,
-        color: '#FFF',
-        alignSelf: 'center',
-    },
+  container: {
+    flex: 1,
+    marginTop: 50,
+    alignItems: 'center',
+},
 
-    input: {
-        color: 'black',
-        backgroundColor: '#FFF',
-        borderRadius: 5,
-        width: '90%',
-        marginBottom: 10,
-    },
-    infoText: {
-        fontWeight: '500',
-        fontSize: 16,
-        alignSelf: 'flex-start',
-        color: '#FFF',
-        marginLeft: 22,
-        marginBottom: 5,
-    },
-    loginButton: {
-        marginTop: 10,
-        width: '75%',
-        backgroundColor: '#000',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    ButtonPressed: { // Change to a darker shade or any color you prefer
-        opacity: 0.3,
-    },
+header:{
+    fontSize: 25,
+    fontWeight: '900',
+    marginBottom: 20,
+    marginLeft: 10,
+    color: '#FFF',
+    alignSelf: 'center',
+},
 
-    signUpButton: {
-        width: '75%',
-        backgroundColor: '#FFF',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
+input: {
+    color: 'black',
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+    width: '90%',
+    marginBottom: 10,
+},
+infoText: {
+    fontWeight: '500',
+    fontSize: 16,
+    alignSelf: 'flex-start',
+    color: '#FFF',
+    marginLeft: 22,
+    marginBottom: 5,
+},
+loginButton: {
+    marginTop: 10,
+    width: '75%',
+    backgroundColor: '#000',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+},
+ButtonPressed: { // Change to a darker shade or any color you prefer
+    opacity: 0.3,
+},
 
-    googleButton: {
-        marginTop: 20,
-        width: '75%',
-        backgroundColor: '#FFF',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
+signUpButton: {
+    width: '75%',
+    backgroundColor: '#FFF',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+},
+
+googleButton: {
+    marginTop: 20,
+    width: '75%',
+    backgroundColor: '#FFF',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+},
 
 
-    lineWithText: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    line: {
-        flex: 1,
-        height: 1,
-        backgroundColor: '#000',
-    },
-    lineText: {
-        color: '#FFF',
-        marginHorizontal: 10,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
+lineWithText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+},
+line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#000',
+},
+lineText: {
+    color: '#FFF',
+    marginHorizontal: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+},
 });
