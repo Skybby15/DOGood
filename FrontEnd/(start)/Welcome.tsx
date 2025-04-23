@@ -4,13 +4,13 @@ import Login from './Login';
 
 export default function Welcome() {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={2} style={{flex: 1}}>
         <Image source={require('../assets/logo/White-Logo-DG-Transparent.png')}
           style={styles.logo}
         ></Image>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 }
 
