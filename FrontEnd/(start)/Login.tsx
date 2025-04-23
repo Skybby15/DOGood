@@ -1,4 +1,4 @@
-import {View, Text, TextInput, Button, Pressable} from 'react-native';
+import {View, Text, TextInput, Pressable} from 'react-native';
 import { StyleSheet } from 'react-native';
 
 function onPressLogin() {
@@ -7,7 +7,7 @@ function onPressLogin() {
 
 export default function Login(){
     return (
-        <View style={{borderColor: '#000', borderWidth: 3, flex: 0.5}}>
+        <View style={{flex: 0.5}}>
             <Text style={{fontWeight: 'bold', fontSize: 20, height: 35, marginBottom: 20, marginLeft: 10}}>Log in to DOGood</Text>
             <Text>Email or username</Text>
             <TextInput style={styles.input}></TextInput>
