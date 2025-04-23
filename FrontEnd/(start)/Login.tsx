@@ -1,46 +1,83 @@
 import {View, Text, TextInput, Pressable} from 'react-native';
 import { StyleSheet } from 'react-native';
+import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-native-toast-message';
 
-function onPressLogin() {
+function onPressLogin(email,password) {
     console.log('Log in button pressed');
+    console.log('Email:', email);
+    console.log('Password:', password);
+}
+
+function onPressSignUp() {
+    console.log('Sign up button pressed');
+}
+
+function onPressGoogle(email,password) {
+    console.log('Google button pressed');
+    console.log('Email:', email);
+    console.log('Password:', password);
 }
 
 export default function Login(){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
-        <View style={{flex: 0.5}}>
-            <Text style={{fontWeight: 'bold', fontSize: 20, height: 35, marginBottom: 20, marginLeft: 10}}>Log in to DOGood</Text>
-            <Text>Email or username</Text>
-            <TextInput style={styles.input}></TextInput>
-            <Text>Password</Text>
-            <TextInput style={styles.input}></TextInput>
-            <Pressable 
+        <View style={styles.container}>
+            <Text style={styles.header}>Log in to DOGood</Text>
+
+            <Text style={styles.infoText}>
+                Email or Username
+            </Text>
+            <TextInput id='email/username' 
+                style={styles.input} 
+                onChangeText={setEmail} 
+                value={email}
+            />
+
+            <Text style={styles.infoText}>
+                Password
+            </Text>
+            <TextInput id='Password' 
+                style={styles.input}
+                secureTextEntry={true}
+                onChangeText={setPassword} 
+                value={password}
+            />
+
+            <Pressable id = 'loginButton'
                 style={({ pressed }) => [
                     styles.loginButton,
-                    pressed && styles.loginButtonPressed,
+                    pressed && styles.ButtonPressed,
                 ]}
-                onPress={onPressLogin}>
-                <Text>Log in</Text>
+                onPress={() => onPressLogin(email,password)}>
+                <Text style={{color: '#FFF'}}>Log in</Text>
             </Pressable>
+
             <View style={styles.lineWithText}>
                 <View style={styles.line} />
                 <Text style={styles.lineText}>OR</Text>
                 <View style={styles.line} />
             </View>
-            <Pressable 
+
+            <Pressable id='signUpButton'
                 style={({ pressed }) => [
-                    styles.loginButton,
-                    pressed && styles.loginButtonPressed,
+                    styles.signUpButton,
+                    pressed && styles.ButtonPressed,
                 ]}
-                onPress={onPressLogin}>
+                onPress={onPressSignUp}>
                     
                 <Text>Sign up</Text>
             </Pressable>
-            <Pressable 
+
+            <Pressable id='googleButton'
                 style={({ pressed }) => [
-                    styles.loginButton,
-                    pressed && styles.loginButtonPressed,
+                    styles.googleButton,
+                    pressed && styles.ButtonPressed,
                 ]}
-                onPress={onPressLogin}>
+                onPress={() => onPressGoogle(email, password)}>
                     
                 <Text>Continue with google</Text>
             </Pressable>
@@ -51,24 +88,64 @@ export default function Login(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 50,
+        alignItems: 'center',
     },
+
+    header:{
+        fontSize: 25,
+        fontWeight: '900',
+        marginBottom: 20,
+        marginLeft: 10,
+        color: '#FFF',
+        alignSelf: 'center',
+    },
+
     input: {
-        borderWidth: 2,
-        borderColor: '#000',
+        color: 'black',
+        backgroundColor: '#FFF',
         borderRadius: 5,
+        width: '90%',
+        marginBottom: 10,
+    },
+    infoText: {
+        fontWeight: '500',
+        fontSize: 16,
+        alignSelf: 'flex-start',
+        color: '#FFF',
+        marginLeft: 22,
+        marginBottom: 5,
     },
     loginButton: {
-        marginLeft: '15%',
-        width: '70%',
-        backgroundColor: '#FF1',
+        marginTop: 10,
+        width: '75%',
+        backgroundColor: '#000',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
-        marginTop: 10,
     },
-    loginButtonPressed: { // Change to a darker shade or any color you prefer
+    ButtonPressed: { // Change to a darker shade or any color you prefer
         opacity: 0.3,
     },
+
+    signUpButton: {
+        width: '75%',
+        backgroundColor: '#FFF',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+
+    googleButton: {
+        marginTop: 20,
+        width: '75%',
+        backgroundColor: '#FFF',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+
+
     lineWithText: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -80,6 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     lineText: {
+        color: '#FFF',
         marginHorizontal: 10,
         fontSize: 16,
         fontWeight: 'bold',
