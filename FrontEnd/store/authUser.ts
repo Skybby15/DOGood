@@ -59,7 +59,7 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             //trimitem data spre backend
             console.log(credentials);
             //aici restul puteti pune localhost eu am pus asa pt ca eu folosesc telefonul deci device extern
-            console.log(process.env.PORT)
+            console.log("PORT: " + ENV_VARS.PORT, "IP: " + ENV_VARS.SERVER_IP)
 
             //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/login", credentials);
