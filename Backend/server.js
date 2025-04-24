@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
-
+app.use("/api/v1/user", authRoutes);
 
 app.listen(5000, () => {
     connectDB();
