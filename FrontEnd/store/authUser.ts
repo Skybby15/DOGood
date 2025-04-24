@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import { ENV_VARS } from '../envVars.js'
 
 
 //in typescript trebuie sa fii precis 
@@ -35,7 +36,9 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             set({isSigningUp: true});
             //trimitem date spre backend
             //aici restul puteti pune localhost eu am pus asa pt ca eu folosesc telefonul deci device extern
-            const response = await axios.post("http://172.20.10.13:5000/api/v1/auth/signup", credentials);
+
+            //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
+            const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/signup", credentials);
             set({user: response.data.user, isSigningUp: false});
             //toast e notificare
             Toast.show({
@@ -56,10 +59,13 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             //trimitem data spre backend
             console.log(credentials);
             //aici restul puteti pune localhost eu am pus asa pt ca eu folosesc telefonul deci device extern
-            const response = await axios.post("http://172.20.10.13:5000/api/v1/auth/login", credentials);
+            console.log(process.env.PORT)
+
+            //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
+            const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/login", credentials);
             console.log("Yay");
             set({user: response.data.user, isLoggingIn: false});
-            //toast e notificare
+            //toast e notificarew
             Toast.show({
                 type: 'success',
                 text1: 'Signup successful!',
