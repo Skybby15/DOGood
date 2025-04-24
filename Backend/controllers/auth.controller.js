@@ -4,8 +4,10 @@ import { generateTokenAndSetCookie } from "../utils/generateToken.js";
 
 export async function signup(req,res){
     try{
+        console.log("Signing up with body: " , req.body)
         const {email, password, username, isAdoptionCentre} = req.body;
-        if(!email || !password || !username || !isAdoptionCentre){
+        console.log(isAdoptionCentre)
+        if(!email || !password || !username || isAdoptionCentre == null){
             return res.status(400).json({success:false, message:"All fields are required"})
         }
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -54,6 +56,8 @@ export async function signup(req,res){
 
 export async function login(req, res){
     try{
+
+        
         const {email, password} = req.body;
         console.log(email);
         console.log(password);

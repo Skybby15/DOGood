@@ -2,6 +2,8 @@ import { View, Text, Pressable, ImageBackground, Image, TextInput } from "react-
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
+import { useAuthUserStore } from '../store/authUser';
+import Toast from 'react-native-toast-message';
 import Checkbox from 'expo-checkbox';
 
 export default function SignUp() {
@@ -20,9 +22,23 @@ export default function SignUp() {
 
     const [signUpActive, setSignUpActive] = useState(false);
 
+    const {signup} = useAuthUserStore()
+
     useEffect(() => {
         checkForSignUp();
       }, [email, username, password, confirmPassword, isChecked, adopterSelected, shelterSelected]);
+
+    const handleSignUp = async() =>{
+        if(password != confirmPassword)
+        {
+            Toast.show({
+                type: 'error',
+                text1: 'Password does not corespond to confirm password!'
+            })
+            return;
+        }
+        signup({email,username,password,isAdoptionCentre:shelterSelected})
+    }
 
     function checkForSignUp()
     {
@@ -112,7 +128,8 @@ export default function SignUp() {
                         </Pressable>
                     </View>
 
-                    <Pressable id = 'signUpButton' style={({pressed}) => [signUpActive ? styles.signUpButtonEnabled : styles.signUpButtonDisabled,signUpActive&&pressed&&styles.signUpButtonPressed]}>
+                    <Pressable id = 'signUpButton' style={({pressed}) => [signUpActive ? styles.signUpButtonEnabled : styles.signUpButtonDisabled,signUpActive&&pressed&&styles.signUpButtonPressed]}
+                        onPress={handleSignUp}>
                         <Text style={{color: "white"}}>Sign Up</Text>
                     </Pressable>
 

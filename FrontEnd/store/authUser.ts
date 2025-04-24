@@ -9,7 +9,7 @@ interface AuthUserStore {
     user: any; // Sau un tip mai clar dacă ai definit userul
     isSigningUp: boolean;
     isLoggingIn: boolean;
-    signup: (credentials: { email: string; username?: string; password: string }) => Promise<void>;
+    signup: (credentials: { email: string; username?: string; password: string; isAdoptionCentre: boolean }) => Promise<void>;
     login: (credentials: { email: string; password: string }) => Promise<void>;
     logout: () => Promise<void>;
     authCheck: () => Promise<void>;
@@ -36,6 +36,7 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             set({isSigningUp: true});
             //trimitem date spre backend
             //aici restul puteti pune localhost eu am pus asa pt ca eu folosesc telefonul deci device extern
+            console.log(credentials)
 
             //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/signup", credentials);
