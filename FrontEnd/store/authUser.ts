@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import axios from 'axios';
-import Toast from 'react-native-toast-message';
 import { ENV_VARS } from '../envVars.js'
 
 
@@ -41,17 +40,9 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/signup", credentials);
             set({user: response.data.user, isSigningUp: false});
-            //toast e notificare
-            Toast.show({
-                type: 'success',
-                text1: 'Signup successful!',
-              });
         }catch(err){
-            Toast.show({
-                type: 'error',
-                text1: err.response.data.message,
-              });
-            set({isSigningUp:false, user:null});
+            set({user: null, isSigningUp: false});
+            throw(err.response.data.message)
         }
     },
     login: async(credentials)=>{
@@ -66,19 +57,10 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/login", credentials);
             console.log("Yay");
             set({user: response.data.user, isLoggingIn: false});
-            //toast e notificarew
-            Toast.show({
-                type: 'success',
-                text1: 'Login successful!',
-              });
-              console.log("Success");
+        
         }catch(err){
-            Toast.show({
-                type: 'error',
-                text1: err.response.data.message,
-              });
             set({user: null, isLoggingIn: false});
-            console.log("Fail");
+            throw(err.response.data.message)
         }
     },
     logout: async()=>{},

@@ -1,17 +1,45 @@
 import {View, Image, ImageBackground,Text, TextInput, Pressable} from 'react-native';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useState } from 'react';
 import { useAuthUserStore } from '../store/authUser';
 
-export default function Login() {
+import Toast from 'react-native-toast-message';
+
+type RootStackParamList = {
+    SignUp: undefined; // Add other routes here if needed
+    Main: undefined;
+};
+
+export default function Login() 
+{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(0);
 
     const { login } = useAuthUserStore();
 
+    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
+
     const handleLogin = async() =>{
-        login({email, password});
+        console.log("handling");
+            await login({email, password})
+            .then((res) => {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Login successful!',
+                });
+                console.log("Success");
+    
+                navigator.navigate("Main");
+            })
+            .catch((err) => {
+                Toast.show({
+                    type: 'error',
+                    text1: err,
+                  });
+                console.log("Fail");
+            })
     }
     
     function onPressSignUp() {
@@ -26,8 +54,6 @@ export default function Login() {
         console.log('Password:', password);
     }
 
-
-  const navigator = useNavigation();
   return (
     <View style={{flex: 1}}>
       <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={1} style={styles.backgroundImage}>

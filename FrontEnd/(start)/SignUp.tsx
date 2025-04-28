@@ -1,12 +1,17 @@
 import { View, Text, Pressable, ImageBackground, Image, TextInput } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { useAuthUserStore } from '../store/authUser';
 import Toast from 'react-native-toast-message';
 import Checkbox from 'expo-checkbox';
 
-export default function SignUp() {
+type RootStackParamList = {
+    Login: undefined; // Add other routes here if needed
+};
+
+export default function SignUp() 
+{
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +19,7 @@ export default function SignUp() {
     
     const [isChecked, setChecked] = useState(false);
 
-    const navigator = useNavigation();
+    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
 
     const [loginPressed, setLoginPressed] = useState(false);
     const [adopterSelected, setAdopterSelected] = useState(false);
@@ -38,6 +43,22 @@ export default function SignUp() {
             return;
         }
         signup({email,username,password,isAdoptionCentre:shelterSelected})
+        .then((res)=>{
+            Toast.show({
+                type: 'success',
+                text1: 'Login successful!',
+            });
+            console.log("Success");
+
+            navigator.navigate("Login");
+        }).catch((err) => {
+            Toast.show({
+                type: 'error',
+                text1: err,
+              });
+            console.log("Fail");
+        })
+        
     }
 
     function checkForSignUp()
