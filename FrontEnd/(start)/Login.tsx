@@ -13,12 +13,6 @@ export default function Login() {
     const handleLogin = async() =>{
         login({email, password});
     }
-
-    function onPressLogin() {
-        console.log('Log in button pressed');
-        console.log('Email:', email);
-        console.log('Password:', password);
-    }
     
     function onPressSignUp() {
         console.log('Sign up button pressed');
@@ -55,7 +49,7 @@ export default function Login() {
                     <Text style={styles.infoText}>
                         Password
                     </Text>
-                    <TextInput id='Password' 
+                    <TextInput id='password' 
                         style={styles.input}
                         secureTextEntry={true}
                         onChangeText={setPassword} 

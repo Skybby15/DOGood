@@ -69,7 +69,7 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             //toast e notificarew
             Toast.show({
                 type: 'success',
-                text1: 'Signup successful!',
+                text1: 'Login successful!',
               });
               console.log("Success");
         }catch(err){

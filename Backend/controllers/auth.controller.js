@@ -7,6 +7,8 @@ export async function signup(req,res){
         console.log("Signing up with body: " , req.body)
         const {email, password, username, isAdoptionCentre} = req.body;
         console.log(isAdoptionCentre)
+
+        //isAdoptionCentre e bool
         if(!email || !password || !username || isAdoptionCentre == null){
             return res.status(400).json({success:false, message:"All fields are required"})
         }
