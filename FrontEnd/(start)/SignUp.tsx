@@ -6,9 +6,7 @@ import { useAuthUserStore } from '../store/authUser';
 import Toast from 'react-native-toast-message';
 import Checkbox from 'expo-checkbox';
 
-type RootStackParamList = {
-    Login: undefined; // Add other routes here if needed
-};
+import { NavList } from "./GlobalVars";
 
 export default function SignUp() 
 {
@@ -19,7 +17,7 @@ export default function SignUp()
     
     const [isChecked, setChecked] = useState(false);
 
-    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
+    const navigator = useNavigation<NavigationProp<NavList>>();
 
     const [loginPressed, setLoginPressed] = useState(false);
     const [adopterSelected, setAdopterSelected] = useState(false);

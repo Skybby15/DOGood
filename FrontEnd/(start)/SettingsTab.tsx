@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Pressable } from "react-native"
+import { StyleSheet } from 'react-native';
+import { NavigationContext } from './GlobalVars'
 
-
-
-export default function SettingsTab({ route }: { route: any })
+export default function SettingsTab()
 {
-    const {navigateToLogin} = route.params;
+    const {navigateToLogin} = useContext(NavigationContext);
 
     return(
-        <View>
-            <Text> Settings Tab</Text>
+        <View style={styles.settingsContainer}>
             <Pressable onPress={navigateToLogin}>
                 <Text> Logout </Text>
             </Pressable>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    settingsContainer:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

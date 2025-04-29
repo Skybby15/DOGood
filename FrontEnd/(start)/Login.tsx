@@ -6,20 +6,16 @@ import { useAuthUserStore } from '../store/authUser';
 
 import Toast from 'react-native-toast-message';
 
-type RootStackParamList = {
-    SignUp: undefined; // Add other routes here if needed
-    Main: undefined;
-};
+import { NavList } from './GlobalVars';
 
 export default function Login() 
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(0);
 
     const { login } = useAuthUserStore();
 
-    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
+    const navigator = useNavigation<NavigationProp<NavList>>();
 
     const handleLogin = async() =>{
         console.log("handling");
