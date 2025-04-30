@@ -1,7 +1,7 @@
-import {View, Image, ImageBackground,Text, TextInput, Pressable} from 'react-native';
+import {View, Image, ImageBackground,Text, TextInput, Pressable, BackHandler} from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthUserStore } from '../store/authUser';
 
 import Toast from 'react-native-toast-message';
@@ -16,6 +16,25 @@ export default function Login()
     const { login } = useAuthUserStore();
 
     const navigator = useNavigation<NavigationProp<NavList>>();
+
+    useEffect(() => {
+        const onBackPress = () => {
+            const state = navigator.getState();
+            const currentScreen = state.routes[state.index].name; 
+
+            if(currentScreen != 'Login')
+            {
+                navigator.goBack();
+            }else{
+                console.log("Trying to go back from Login Screen!")
+            }
+        
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress',onBackPress);
+        return () => {backHandler.remove();}
+    }, []);
 
     const handleLogin = async() =>{
         console.log("handling");

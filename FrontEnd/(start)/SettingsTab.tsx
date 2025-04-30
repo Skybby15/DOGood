@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Pressable } from "react-native"
+import { View, Text, Pressable, TouchableOpacity } from "react-native"
 import { StyleSheet } from 'react-native';
 import { NavigationContext } from './GlobalVars'
 
@@ -8,18 +8,30 @@ export default function SettingsTab()
     const {navigateToLogin} = useContext(NavigationContext);
 
     return(
-        <View style={styles.settingsContainer}>
-            <Pressable onPress={navigateToLogin}>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={navigateToLogin} style={styles.button}>
                 <Text> Logout </Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    settingsContainer:{
-        flex: 1,
+    container: {
+        backgroundColor: '#A8B5DB',
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 40,
+        width: 100,
+        height: 40,
     }
 })

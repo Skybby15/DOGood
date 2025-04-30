@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "FrontEnd",
+    "name": "DOGood",
     "slug": "FrontEnd",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo/Colorful-Logo-Transparent.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo/Colorful-Logo-Transparent.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.FrontEnd"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo/Colorful-Logo-Transparent.png"
     }
   }
 }

@@ -165,7 +165,15 @@ export default function SignUp()
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.loginText}>Already have an Account? </Text>
                         <Pressable id = 'loginButton' style={styles.loginButton} 
-                            onPress={() => navigator.navigate('Login')}
+                            onPress={() => {
+                                if(navigator.canGoBack() && navigator.getState().routes[navigator.getState().index - 1].name === 'Login')
+                                {
+                                    navigator.goBack();
+                                }else
+                                {
+                                    navigator.navigate('Login');
+                                }
+                            }}
                             onTouchStart={() => setLoginPressed(true)}
                             onTouchCancel={() => setLoginPressed(false)}
                             onTouchEnd={() => setLoginPressed(false)}>
