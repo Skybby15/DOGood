@@ -7,6 +7,7 @@ export const connectDB = async () =>
         console.log("Am ajuns la connect: ");
         console.log(ENV_VARS.MONGO_URI);
         try{
+            console.log("Trying connect");
             const conn = await mongoose.connect(ENV_VARS.MONGO_URI);
             console.log("MongoDB connected: " + conn.connection.host);
         }catch(error){

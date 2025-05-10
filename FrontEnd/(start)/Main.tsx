@@ -62,7 +62,7 @@ export default function MainPage()
                                 overflow: 'hidden',
                                 borderWidth: 0.2,
                                 borderColor: '0f0D23',
-                                //height: 70,
+                                height: 45,
                             }
                         })}>
                         <Tab.Screen name="Feed" component={FeedTab} 
