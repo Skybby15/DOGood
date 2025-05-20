@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import axios from 'axios';
-import { ENV_VARS } from '../envVars.js'
 
 
 //in typescript trebuie sa fii precis 
@@ -31,6 +30,11 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
     isSigningUp:false,
     isLoggingIn:false,
     signup: async(credentials) =>{
+
+        //asa trebuie sa se importeze envVars , nu direct importat sus , altfel trebuie compilat de fiecare data cand e modificat
+        const module = await import('../envVars.js');
+        const ENV_VARS = module.ENV_VARS;
+
         try{
             set({isSigningUp: true});
             //trimitem date spre backend
@@ -47,6 +51,9 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
     },
     login: async(credentials)=>{
         try{
+        const module = await import('../envVars.js');
+        const ENV_VARS = module.ENV_VARS;
+
             set({isLoggingIn: true});
             //trimitem data spre backend
             console.log(credentials);

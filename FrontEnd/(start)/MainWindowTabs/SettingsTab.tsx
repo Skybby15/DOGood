@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, Pressable, TouchableOpacity } from "react-native"
 import { StyleSheet } from 'react-native';
-import { NavigationContext } from './GlobalVars'
+import { NavigationContext } from '../GlobalVars'
 
 export default function SettingsTab()
 {

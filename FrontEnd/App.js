@@ -1,7 +1,7 @@
 import Login from './(start)/Login';
 import SignUp from './(start)/SignUp';
 import Main from './(start)/Main';
-import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();

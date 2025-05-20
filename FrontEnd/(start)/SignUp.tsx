@@ -79,7 +79,7 @@ export default function SignUp()
         <View style={{flex: 1}}>
             <ImageBackground source = {require('../assets/pets/cat&dog1.jpeg')} blurRadius={0.9} style={{flex: 1}}>
                 <View style={styles.headerContainer}>
-                    <Image source={require('../assets/logo/Black-Logo-DG-Transparent.png')}
+                    <Image source={require('../assets/logo/DarkLogo.png')}
                             style={styles.logo}
                             />
                     <Text style={styles.headerText}>Create an account</Text>

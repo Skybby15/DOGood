@@ -5,7 +5,7 @@
     "slug": "FrontEnd",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo/Colorful-Logo-Transparent.png",
+    "icon": "./assets/logo/ColorLogo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo/Colorful-Logo-Transparent.png",
+        "foregroundImage": "./assets/logo/ColorLogo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.FrontEnd"

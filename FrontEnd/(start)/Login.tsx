@@ -72,7 +72,7 @@ export default function Login()
   return (
     <View style={{flex: 1}}>
       <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={1} style={styles.backgroundImage}>
-        <Image source={require('../assets/logo/White-Logo-DG-Transparent.png')}
+        <Image source={require('../assets/logo/WhiteLogo.png')}
           style={styles.logo}
         ></Image>
         <View style={styles.container}>

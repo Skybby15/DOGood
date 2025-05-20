@@ -1,11 +1,11 @@
 import { View,Text,StyleSheet } from "react-native";
 
 
-export default function FeedTab()
+export default function PostTab()
 {
     return(
         <View style={styles.container}>
-            <Text> Feed Tab</Text>
+            <Text> Post Tab</Text>
         </View>
     );
 }

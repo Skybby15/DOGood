@@ -4,28 +4,48 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import { NavigationContext } from "./GlobalVars"
-import FeedTab from "../(start)/FeedTab";
-import SettingsTab from "./SettingsTab";
+import FeedTab from "./MainWindowTabs/FeedTab";
+import PostTab from "./MainWindowTabs/PostTab";
+import ProfileTab from "./MainWindowTabs/ProfileTab";
+import SearchTab from "./MainWindowTabs/SearchTab";
+import SettingsTab from "./MainWindowTabs/SettingsTab";
 import { NavList } from "./GlobalVars";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import { useState,useEffect } from "react";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { useNavigationState } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
-function TabIcon({focused,iconFocused,iconDeFocused,title} : any){
+function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
+    const bgOpacity = useSharedValue(0);
 
-    if(focused)
-    {
-        return (
-            <ImageBackground style={styles.tab}>
-                <Ionicons name={iconFocused} color={'white'} size={25}/>
-            </ImageBackground>
-        );
-    }else 
-        return (
-            <ImageBackground>
-                <Ionicons name={iconDeFocused} color={'white'} size={25}/>
-            </ImageBackground>
-        );
+    const currentRouteName = useNavigationState(state => state.routes[state.index].name);
+    useEffect(() => {
+        bgOpacity.value = withTiming(currentRouteName == route ? 1 : 0 , {duration:100});
+    }, [currentRouteName]);
+
+    const animatedStyle = useAnimatedStyle(() => ({
+                opacity: bgOpacity.value,
+                position: 'absolute',
+            }));
+
+    return (
+        <View style={{ justifyContent: 'center', alignItems: 'center', width: 90, height: 60 }}>
+        <Animated.View
+            style={[
+                styles.tab,
+                animatedStyle,
+            ]}
+        />
+        <Ionicons
+            name={focused ? iconFocused : iconDeFocused}
+            color={'white'}
+            size={25}
+            style={{ opacity: 1, zIndex: 1 }}
+        />
+    </View>
+    )
 }
 
 export default function MainPage()
@@ -63,53 +83,60 @@ export default function MainPage()
                                 borderWidth: 0.2,
                                 borderColor: '0f0D23',
                                 height: 45,
+                                
                             }
                         })}>
                         <Tab.Screen name="Feed" component={FeedTab} 
                         options={{
                             headerShown: false,
-                            tabBarIcon: ({focused, color, size}) => {
+                            
+                            
+                            tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon focused={focused} 
                                             iconFocused={'home'} 
                                             iconDeFocused={'home-outline'}
+                                            route={'Feed'}
                                     />
                                 );
                             },
                             tabBarShowLabel: false
                             }} />
-                        <Tab.Screen name="Search" component={FeedTab} 
+                        <Tab.Screen name="Search" component={SearchTab} 
                         options={{
                             headerShown: false,
-                            tabBarIcon: ({focused, color, size}) => {
+                            tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon focused={focused} 
                                             iconFocused={'search'} 
                                             iconDeFocused={'search-outline'}
+                                            route={'Search'}
                                     />
                                 );
                             },
                             tabBarShowLabel: false
                             }}/>
-                        <Tab.Screen name="Post" component={FeedTab} options={{
+                        <Tab.Screen name="Post" component={PostTab} options={{
                             headerShown: false,
-                            tabBarIcon: ({focused, color, size}) => {
+                            tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon focused={focused} 
                                             iconFocused={'add-circle'} 
                                             iconDeFocused={'add-circle-outline'}
+                                            route={'Post'}
                                     />
                                 );
                             },
                             tabBarShowLabel: false
                             }}/>
-                        <Tab.Screen name="Profile" component={FeedTab} options={{
+                        <Tab.Screen name="Profile" component={ProfileTab} options={{
                             headerShown: false,
-                            tabBarIcon: ({focused, color, size}) => {
+                            tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon focused={focused} 
                                             iconFocused={'person'} 
                                             iconDeFocused={'person-outline'}
+                                            route={'Profile'}
                                     />
                                 );
                             },
@@ -117,11 +144,12 @@ export default function MainPage()
                             }}/>
                         <Tab.Screen name="Settings" component={SettingsTab} options={{
                             headerShown: false,
-                            tabBarIcon: ({focused, color, size}) => {
+                            tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon focused={focused} 
                                             iconFocused={'settings'} 
                                             iconDeFocused={'settings-outline'}
+                                            route={'Settings'}
                                     />
                                 );
                             },
@@ -137,15 +165,13 @@ export default function MainPage()
 const styles = StyleSheet.create({
     tab:{
         flexDirection: 'row',
-        width: '100%',
-        flex: 1,
-        minWidth: 90,
-        minHeight: 60,
         justifyContent:'center',
         alignItems:'center',
         backgroundColor: 'purple',
         borderRadius: 30,
         overflow: 'hidden',
-
+        
+        width: 90,
+        height: 60,
     }
 })
