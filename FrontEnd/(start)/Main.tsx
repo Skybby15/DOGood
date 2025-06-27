@@ -1,5 +1,5 @@
 import { NavigationContainer, NavigationIndependentTree } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createBottomTabNavigator, SceneStyleInterpolators } from "@react-navigation/bottom-tabs"
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -81,10 +81,11 @@ export default function MainPage()
                                 position: 'absolute',
                                 overflow: 'hidden',
                                 borderWidth: 0.2,
-                                borderColor: '0f0D23',
+                                borderColor: '#0f0D23',
                                 height: 45,
                                 
                             }
+                            
                         })}>
                         <Tab.Screen name="Feed" component={FeedTab} 
                         options={{

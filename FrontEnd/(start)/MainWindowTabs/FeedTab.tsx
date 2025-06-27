@@ -5,7 +5,7 @@ export default function FeedTab()
 {
     return(
         <View style={styles.container}>
-            <View style={styles.post}/>
+            <Text>Feed/Home Tab</Text>
         </View>
     );
 }

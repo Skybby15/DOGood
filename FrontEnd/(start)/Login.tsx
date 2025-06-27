@@ -45,7 +45,7 @@ export default function Login()
                     text1: 'Login successful!',
                 });
                 console.log("Success");
-    
+                
                 navigator.navigate("Main");
             })
             .catch((err) => {

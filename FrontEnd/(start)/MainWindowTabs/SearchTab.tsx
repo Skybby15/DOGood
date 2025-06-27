@@ -4,8 +4,8 @@ import { View,Text,StyleSheet } from "react-native";
 export default function SearchTab()
 {
     return(
-        <View style={styles.container}>
-            <Text> Search Tab</Text>
+        <View style={{flex:1,backgroundColor:'red'}}>
+            <View style={{flex:1,backgroundColor:'blue'}}></View>
         </View>
     );
 }
