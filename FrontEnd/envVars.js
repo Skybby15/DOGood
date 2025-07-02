@@ -10,5 +10,5 @@
 
 export const ENV_VARS = {
     PORT: '5000', // trebuie sa coincida cu cel de la server neaparat
-    SERVER_IP: '192.168.1.4',
+    SERVER_IP: '192.168.100.117',
 }

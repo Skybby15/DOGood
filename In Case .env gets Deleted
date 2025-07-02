@@ -1,4 +1,4 @@
-MONGO_URI= mongodb+srv://savaclaudiu42:<db_password>@maincluster.rkjflw9.mongodb.net/
-PORT= 5000,
-NODE_ENV= developer
-JWT_SECRET= easyToDecode
+MONGO_URI=mongodb+srv://savaclaudiu42:<db_password>@maincluster.rkjflw9.mongodb.net/
+PORT=5000
+NODE_ENV=developer
+JWT_SECRET=easyToDecode
