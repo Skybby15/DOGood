@@ -1,25 +1,25 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect} from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Dimensions, Pressable } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FamilyScreen from "./ProfileScreens/FamilyScreen";
-import PostsScreen from "./ProfileScreens/PostsScreen";
-import MentionsScreen from "./ProfileScreens/MentionsScreen";
+import FamilyScreen from "../Profile/ProfileScreens/FamilyScreen";
+import PostsScreen from "../Profile/ProfileScreens/PostsScreen";
+import MentionsScreen from "../Profile/ProfileScreens/MentionsScreen";
 import Animated from "react-native-reanimated";
+import ProfileContext from "./ProfileContext";
 
 import { NavigationContainer, createNavigationContainerRef, NavigationIndependentTree } from '@react-navigation/native';
-import { NavList } from '../GlobalVars';
+import { NavList } from '../../GlobalVars';
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 const navigationRef = createNavigationContainerRef<NavList>();
 const Stack = createBottomTabNavigator();
-export const ProfileContext = createContext(null);
 
 const { width,height } = Dimensions.get("window");
 
 export default function ProfileTab() {
-  const path = '../../assets/caregivers.png'; // Adjust this dynamically as needed
+  const path = '../../../assets/caregivers.png'; // Adjust this dynamically as needed
   const [tabSelected, setTabSelected] = useState('Family');
 
   const bgPosX = useSharedValue(42);
@@ -46,7 +46,7 @@ export default function ProfileTab() {
 
     setTabSelected(destination);
     setTimeout(() => {
-      navigationRef.navigate(destination);
+      navigationRef.navigate(destination as undefined);
     }, 100);
   }
 
@@ -56,7 +56,7 @@ export default function ProfileTab() {
         <Pressable>
           <ImageBackground
             style={styles.profilePic}
-            source={require('../../assets/logo/ColorLogo.png')}
+            source={require('../../../assets/logo/ColorLogo.png')}
           />
         </Pressable>
         <View id='info' style={styles.infoText}>

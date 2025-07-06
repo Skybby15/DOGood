@@ -3,27 +3,27 @@ import { useIsFocused } from "@react-navigation/native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useContext, useEffect } from "react";
 import { FlatList } from "react-native";
-import { ProfileContext } from "../ProfileTab";
+import ProfileContext from "../ProfileContext";
 
 const { width } = Dimensions.get("window");
 
 // test items
 const familyMembers = [
-        {id:1,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:2,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:3,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:4,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:5,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:6,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:7,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
-        {id:8,image:require('../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:1,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:2,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:3,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:4,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:5,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:6,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:7,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
+        {id:8,image:require('../../../../assets/pets/carnatOcta.jpg'),name:"undeWaterBoy"},
     ]
 
 export default function FamilyScreen() {
     const isFocused = useIsFocused();
     const translateX = useSharedValue(-width);
 
-    const {tabSelected} = useContext(ProfileContext);
+    const { tabSelected } = useContext(ProfileContext);
 
     const imageScale = useSharedValue(1);
 

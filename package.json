@@ -2,9 +2,9 @@
   "name": "dogood-1",
   "version": "1.0.0",
   "description": "Proiect MPP",
-  "main": "backend/server.js",
+  "main": "Backend/server.js",
   "scripts": {
-    "dev": "node --watch backend/server.js",
+    "dev": "node --watch Backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,7 +30,13 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
+    "pino": "^9.7.0",
     "react-native-dotenv": "^3.4.11",
     "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.0.10"
   }
 }

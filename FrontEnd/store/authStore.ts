@@ -1,15 +1,20 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //in typescript trebuie sa fii precis 
 interface AuthUserStore {
+    //data attributes
     user: any; // Sau un tip mai clar dacă ai definit userul
+    
+    //status attributes
     isSigningUp: boolean;
     isLoggingIn: boolean;
+    isAuthenticating: boolean;
+
+    //methods
     signup: (credentials: { email: string; username?: string; password: string; isAdoptionCentre: boolean }) => Promise<void>;
     login: (credentials: { email: string; password: string }) => Promise<void>;
-    logout: () => Promise<void>;
     authCheck: () => Promise<void>;
   }
   
@@ -27,9 +32,13 @@ restul cititi despre React hooks de pe w3school)
 
 export const useAuthUserStore = create<AuthUserStore>((set)=>({
     user: null,
+
     isSigningUp:false,
     isLoggingIn:false,
-    signup: async(credentials) =>{
+    isAuthenticating: false,
+    
+    signup: async(credentials) =>
+    {
 
         //asa trebuie sa se importeze envVars , nu direct importat sus , altfel trebuie compilat de fiecare data cand e modificat
         const module = await import('../envVars.js');
@@ -49,7 +58,9 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             throw(err.response.data.message)
         }
     },
-    login: async(credentials)=>{
+
+    login: async(credentials)=>
+    {
         try{
         const module = await import('../envVars.js');
         const ENV_VARS = module.ENV_VARS;
@@ -62,7 +73,9 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
 
             //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/login", credentials);
-            console.log("Yay");
+            console.log("Token received: ", !!response.data.token);
+
+            await AsyncStorage.setItem('token', response.data.token);
             set({user: response.data.user, isLoggingIn: false});
         
         }catch(err){
@@ -70,6 +83,32 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             throw(err.response.data.message)
         }
     },
-    logout: async()=>{},
-    authCheck: async()=>{},
+
+    authCheck: async()=>
+    {
+        set({ isAuthenticating: true });
+
+        const module = await require('../envVars.js');
+        const ENV_VARS = module.ENV_VARS;
+
+        const token = await AsyncStorage.getItem('token');
+        console.log("Token found: ", !!token);
+
+        if (!token) {
+            set({ isAuthenticating: false });
+            throw new Error("No token found, please log in again.");
+        }
+
+        try {
+            const response = await axios.get("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/authenticate", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            set({ user: response.data.user, isAuthenticating: false });
+        } catch (error) {
+            console.error("Error authenticating user:", error);
+            set({ isAuthenticating: false });
+            //TODO clear AsyncStorage depending on the error
+            throw new Error(error.response?.data?.message || "Failed to authenticate user");
+        }
+    },
 }))

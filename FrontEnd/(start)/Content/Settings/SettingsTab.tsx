@@ -1,15 +1,26 @@
 import React, { useContext } from 'react';
 import { View, Text, Pressable, TouchableOpacity } from "react-native"
 import { StyleSheet } from 'react-native';
-import { NavigationContext } from '../GlobalVars'
-
+import MainContext from '../MainContext';
 export default function SettingsTab()
 {
-    const {navigateToLogin} = useContext(NavigationContext);
+    const { navigateToLogin , store } = useContext(MainContext);
+    const { logout } = store;
+
+    async function handleLogout() {
+        await logout()
+        .then(() => {
+            console.log("Logout successful");
+            navigateToLogin();
+        })
+        .catch((err) => {
+            console.error("Logout failed:", err);
+        });
+    }
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity onPress={navigateToLogin} style={styles.button}>
+            <TouchableOpacity onPress={handleLogout} style={styles.button}>
                 <Text> Logout </Text>
             </TouchableOpacity>
         </View>

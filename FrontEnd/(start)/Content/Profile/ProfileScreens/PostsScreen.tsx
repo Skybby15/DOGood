@@ -2,7 +2,7 @@ import { View, Text, Dimensions } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useContext, useEffect } from "react";
-import { ProfileContext } from "../ProfileTab";
+import ProfileContext from "../ProfileContext";
 
 const { width } = Dimensions.get("window");
 

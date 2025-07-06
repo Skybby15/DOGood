@@ -1,8 +1,3 @@
-import { createContext } from "react";
-
-export const NavigationContext = createContext(null);
-
-
 
 export type NavList = {
     Login: undefined,

@@ -1,19 +1,21 @@
 import { NavigationContainer, NavigationIndependentTree } from "@react-navigation/native";
-import { createBottomTabNavigator, SceneStyleInterpolators } from "@react-navigation/bottom-tabs"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { NavigationContext } from "./GlobalVars"
-import FeedTab from "./MainWindowTabs/FeedTab";
-import PostTab from "./MainWindowTabs/PostTab";
-import ProfileTab from "./MainWindowTabs/ProfileTab";
-import SearchTab from "./MainWindowTabs/SearchTab";
-import SettingsTab from "./MainWindowTabs/SettingsTab";
-import { NavList } from "./GlobalVars";
-import { ImageBackground, StyleSheet, View } from "react-native";
-import { useState,useEffect } from "react";
+import { NavList } from "../GlobalVars";
+import MainContext from "./MainContext";
+import FeedTab from "./Feed/FeedTab";
+import PostTab from "./Post/PostTab";
+import ProfileTab from "./Profile/ProfileTab";
+import SearchTab from "./Search/SearchTab";
+import SettingsTab from "./Settings/SettingsTab";
+import { StyleSheet, View } from "react-native";
+import { useEffect } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useNavigationState } from '@react-navigation/native';
+
+import { useUserProfileStore } from "../../store/profileStore";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,25 +34,26 @@ function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
 
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', width: 90, height: 60 }}>
-        <Animated.View
-            style={[
-                styles.tab,
-                animatedStyle,
-            ]}
-        />
-        <Ionicons
-            name={focused ? iconFocused : iconDeFocused}
-            color={'white'}
-            size={25}
-            style={{ opacity: 1, zIndex: 1 }}
-        />
-    </View>
+            <Animated.View
+                style={[
+                    styles.tab,
+                    animatedStyle,
+                ]}
+            />
+            <Ionicons
+                name={focused ? iconFocused : iconDeFocused}
+                color={'white'}
+                size={25}
+                style={{ opacity: 1, zIndex: 1 }}
+            />
+        </View>
     )
 }
 
 export default function MainPage()
 {
     const navigator = useNavigation<NavigationProp<NavList>>();
+    const profileStore = useUserProfileStore();
 
     function navigateToLogin()
     {
@@ -58,7 +61,7 @@ export default function MainPage()
     }
 
     return (
-        <NavigationContext.Provider value={{navigateToLogin}} >
+        <MainContext.Provider value={{navigateToLogin, store: profileStore}} >
             <NavigationIndependentTree>
                 <NavigationContainer>
                     <Tab.Navigator id={undefined}
@@ -159,7 +162,7 @@ export default function MainPage()
                     </Tab.Navigator>
                 </NavigationContainer>
             </NavigationIndependentTree>
-        </NavigationContext.Provider>
+        </MainContext.Provider>
     )
 }
 
