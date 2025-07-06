@@ -2,11 +2,11 @@ import { View, Text, Pressable, ImageBackground, Image, TextInput } from "react-
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
-import { useAuthUserStore } from '../store/authUser';
+import { useAuthUserStore } from '../../store/authStore';
 import Toast from 'react-native-toast-message';
 import Checkbox from 'expo-checkbox';
 
-import { NavList } from "./GlobalVars";
+import { NavList } from "../GlobalVars";
 
 export default function SignUp() 
 {
@@ -77,9 +77,9 @@ export default function SignUp()
 
     return(
         <View style={{flex: 1}}>
-            <ImageBackground source = {require('../assets/pets/cat&dog1.jpeg')} blurRadius={0.9} style={{flex: 1}}>
+            <ImageBackground source = {require('../../assets/pets/cat&dog1.jpeg')} blurRadius={0.9} style={{flex: 1}}>
                 <View style={styles.headerContainer}>
-                    <Image source={require('../assets/logo/Black-Logo-DG-Transparent.png')}
+                    <Image source={require('../../assets/logo/DarkLogo.png')}
                             style={styles.logo}
                             />
                     <Text style={styles.headerText}>Create an account</Text>
@@ -130,13 +130,13 @@ export default function SignUp()
 
                     <View style={styles.adopterShelterContainer}>
                         <Pressable id="isAdopterButton" style={styles.adopterButton} onPress={()=>{setAdopterSelected(true),setShelterSelected(false)}}>
-                            <Image source={require("../assets/caregivers.png")} style={adopterSelected ? styles.adopterImageSelected : styles.adopterImage}/>
+                            <Image source={require("../../assets/caregivers.png")} style={adopterSelected ? styles.adopterImageSelected : styles.adopterImage}/>
                             <Text style={adopterSelected ? styles.adopterTextSelected : styles.adopterText}> Adopter </Text>
                         </Pressable>
                         <View style={styles.adopterShelterBorder}/>
                         <Pressable id="isShelterButton" style={styles.shelterButton} onPress={()=>{setAdopterSelected(false),setShelterSelected(true)}}>
                             <Text style={shelterSelected ? styles.shelterTextSelected : styles.shelterText}> Shelter </Text>
-                            <Image source={require("../assets/shelter.png")} style={shelterSelected ? styles.shelterImageSelected : styles.shelterImage}/>
+                            <Image source={require("../../assets/shelter.png")} style={shelterSelected ? styles.shelterImageSelected : styles.shelterImage}/>
                         </Pressable>
                     </View>
                     

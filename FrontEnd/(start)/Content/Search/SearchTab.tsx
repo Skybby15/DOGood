@@ -1,11 +1,11 @@
 import { View,Text,StyleSheet } from "react-native";
 
 
-export default function FeedTab()
+export default function SearchTab()
 {
     return(
-        <View style={styles.container}>
-            <Text> Feed Tab</Text>
+        <View style={{flex:1,backgroundColor:'red'}}>
+            <View style={{flex:1,backgroundColor:'blue'}}></View>
         </View>
     );
 }

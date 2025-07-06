@@ -2,14 +2,16 @@ import {View, Image, ImageBackground,Text, TextInput, Pressable, BackHandler} fr
 import { StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { useAuthUserStore } from '../store/authUser';
+
+import { useAuthUserStore } from '../../store/authStore';
 
 import Toast from 'react-native-toast-message';
 
-import { NavList } from './GlobalVars';
+import { NavList } from '../GlobalVars';
 
 export default function Login() 
 {
+    //AsyncStorage.clear(); !!For debugging purposes only, remove in production!!
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -37,24 +39,23 @@ export default function Login()
     }, []);
 
     const handleLogin = async() =>{
-        console.log("handling");
-            await login({email, password})
-            .then((res) => {
-                Toast.show({
-                    type: 'success',
-                    text1: 'Login successful!',
+        console.log("handling login");
+        await login({email, password})
+        .then((res) => {
+            Toast.show({
+                type: 'success',
+                text1: 'Login successful!',
+            });
+            console.log("Success");
+            navigator.navigate("Main");
+        })
+        .catch((err) => {
+            Toast.show({
+                type: 'error',
+                text1: err,
                 });
-                console.log("Success");
-    
-                navigator.navigate("Main");
-            })
-            .catch((err) => {
-                Toast.show({
-                    type: 'error',
-                    text1: err,
-                  });
-                console.log("Fail");
-            })
+            console.log("Fail");
+        });
     }
     
     function onPressSignUp() {
@@ -71,8 +72,8 @@ export default function Login()
 
   return (
     <View style={{flex: 1}}>
-      <ImageBackground source={require('../assets/pets/dog1.jpeg')} blurRadius={1} style={styles.backgroundImage}>
-        <Image source={require('../assets/logo/White-Logo-DG-Transparent.png')}
+      <ImageBackground source={require('../../assets/pets/dog1.jpeg')} blurRadius={1} style={styles.backgroundImage}>
+        <Image source={require('../../assets/logo/WhiteLogo.png')}
           style={styles.logo}
         ></Image>
         <View style={styles.container}>

@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken"
 import { ENV_VARS } from "../config/envVars.js"
 
-export const generateTokenAndSetCookie = (userId, res) =>{
-    const token = jwt.sign({userId}, ENV_VARS.JWT_SECRET, {expiresIn: "15d"});
 
-    res.cookie("jwt-dogood", token, {
-        maxAge: 15*24*60*60*1000, //15 days in MS
-        httpOnly:true, //prevent XSS attacks cross-site, not be accesed by js
-        sameSite:"strict",
-        secure: ENV_VARS.NODE_ENV !== "development",
-    })
+import express from "express";
+/**
+ * Generates a JWT token and sets it as a cookie in the response.
+ * @param {string} userId - The ID of the user to include in the token payload.
+ * @param {express.Response} res - The Express response object to set the cookie on.
+ * @returns {string} The generated JWT token.
+ */
+export const generateToken = (userId) =>{
+    const token = jwt.sign({userId}, ENV_VARS.JWT_SECRET, {expiresIn: "15d"});
 
     return token;
 };
