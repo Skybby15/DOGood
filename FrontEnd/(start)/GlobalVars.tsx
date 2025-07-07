@@ -1,3 +1,6 @@
+import { Dimensions } from "react-native";
+
+const { width,height } = Dimensions.get("window");
 
 export type NavList = {
     Login: undefined,
@@ -7,3 +10,6 @@ export type NavList = {
     Posts: undefined;
     Mentions: undefined;
 }
+
+export const Width = width;
+export const Height = height;

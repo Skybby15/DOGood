@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { NavList } from "../GlobalVars";
+import { NavList, Height, Width } from "../GlobalVars";
 import MainContext from "./MainContext";
 import FeedTab from "./Feed/FeedTab";
 import PostTab from "./Post/PostTab";
@@ -24,7 +24,7 @@ function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
 
     const currentRouteName = useNavigationState(state => state.routes[state.index].name);
     useEffect(() => {
-        bgOpacity.value = withTiming(currentRouteName == route ? 1 : 0 , {duration:100});
+        bgOpacity.value = withTiming(currentRouteName == route ? 1 : 0 , {duration:150});
     }, [currentRouteName]);
 
     const animatedStyle = useAnimatedStyle(() => ({
@@ -76,16 +76,16 @@ export default function MainPage()
                                 alignItems: 'center',
                             },
                             tabBarStyle: {
+                                opacity: 1,
                                 backgroundColor: '#0f0D23',
-                                borderRadius: 50,
-                                marginHorizontal: 10,
-                                marginBottom: 20,
+                                borderRadius: 0,
                                 paddingTop: 3,
                                 position: 'absolute',
                                 overflow: 'hidden',
                                 borderWidth: 0.2,
                                 borderColor: '#0f0D23',
-                                height: 45,
+                                height: Height/15,
+                                width: Width ,
                                 
                             }
                             
@@ -172,10 +172,10 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         backgroundColor: 'purple',
-        borderRadius: 30,
+        borderRadius: 24,
         overflow: 'hidden',
         
-        width: 90,
-        height: 60,
+        width: Width/7,
+        height: Height/20,
     }
 })
