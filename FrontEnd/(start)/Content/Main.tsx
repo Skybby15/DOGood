@@ -14,6 +14,7 @@ import { StyleSheet, View } from "react-native";
 import { useEffect } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useNavigationState } from '@react-navigation/native';
+import CustomTabBar from "./MainBar"; // Assuming you have a custom tab bar component
 
 import { useUserProfileStore } from "../../store/profileStore";
 
@@ -42,7 +43,7 @@ function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
             />
             <Ionicons
                 name={focused ? iconFocused : iconDeFocused}
-                color={'white'}
+                color={'black'} // was white
                 size={25}
                 style={{ opacity: 1, zIndex: 1 }}
             />
@@ -65,31 +66,33 @@ export default function MainPage()
             <NavigationIndependentTree>
                 <NavigationContainer>
                     <Tab.Navigator id={undefined}
-                        screenOptions={() => ({
-                            tabBarActiveTintColor: 'black',
-                            tabBarInactiveTintColor: 'gray',
-                            tabBarShowLabel: false,
-                            tabBarItemStyle: {
-                                width: '100%',
-                                height: '100%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            },
-                            tabBarStyle: {
-                                opacity: 1,
-                                backgroundColor: '#0f0D23',
-                                borderRadius: 0,
-                                paddingTop: 3,
-                                position: 'absolute',
-                                overflow: 'hidden',
-                                borderWidth: 0.2,
-                                borderColor: '#0f0D23',
-                                height: Height/15,
-                                width: Width ,
+                        tabBar={(props) => <CustomTabBar {...props} />}
+                        // screenOptions={() => ({
+                        //     tabBarActiveTintColor: 'black',
+                        //     tabBarInactiveTintColor: 'gray',
+                        //     tabBarShowLabel: false,
+                        //     tabBarItemStyle: {
+                        //         width: '100%',
+                        //         height: '100%',
+                        //         justifyContent: 'center',
+                        //         alignItems: 'center',
+                        //     },
+                        //     tabBarStyle: {
+                        //         opacity: 1,
+                        //         backgroundColor: '#0f0D23',
+                        //         borderRadius: 0,
+                        //         paddingTop: 3,
+                        //         position: 'absolute',
+                        //         overflow: 'hidden',
+                        //         borderWidth: 0.2,
+                        //         borderColor: '#0f0D23',
+                        //         height: Height/15,
+                        //         width: Width ,
                                 
-                            }
+                        //     }
                             
-                        })}>
+                        // })}
+                        >
                         <Tab.Screen name="Feed" component={FeedTab} 
                         options={{
                             headerShown: false,
