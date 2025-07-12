@@ -6,8 +6,6 @@ import userRoutes from './routes/user.route.js';
 import { connectDB } from "./config/db.js"
 
 
-
-
 const app=express();
 
 app.use(cors());
