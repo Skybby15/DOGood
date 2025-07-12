@@ -11,7 +11,7 @@ import ProfileTab from "./Profile/ProfileTab";
 import SearchTab from "./Search/SearchTab";
 import SettingsTab from "./Settings/SettingsTab";
 import { StyleSheet, View } from "react-native";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useNavigationState } from '@react-navigation/native';
 import CustomTabBar from "./MainBar"; // Assuming you have a custom tab bar component
@@ -68,11 +68,11 @@ export default function MainPage()
                 <NavigationContainer>
                     <Tab.Navigator id={undefined}
                         tabBar={(props) => <CustomTabBar {...props} />}
-                        >
-                        <Tab.Screen name="Feed" component={FeedTab} 
+                    >
+                        <Tab.Screen name="Feed" component={FeedTab}
 
                         options={{
-                            headerShown: false,         
+                            headerShown: false,      
                             tabBarIcon: ({focused}) => {
                                 return (
                                     <TabIcon
