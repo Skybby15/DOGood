@@ -40,16 +40,11 @@ const CustomTabBar = (props: BottomTabBarProps) => {
     const targetAngle = -(360 / (tabCount * 2)) * index;
     let diff = targetAngle - currentAngle.current;
 
-    // Normalize the difference to the range [-180, 180]
-    console.log("Diff: ", diff)
     while (diff > 180) diff -= 360;
     while (diff < -180) diff += 360;
 
     const newAngle = currentAngle.current + diff;
 
-    console.log("Angle: ", newAngle)
-    console.log("Value: ", offset.value)
-    console.log("After Diff: ", diff)
     offset.value = withTiming(newAngle, { duration: 350 });
     currentAngle.current = newAngle;
   }
