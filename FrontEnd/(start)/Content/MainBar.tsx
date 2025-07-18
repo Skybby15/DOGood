@@ -81,7 +81,7 @@ const CustomTabBar = (props: BottomTabBarProps) => {
     }
 
     slideTimeout.current = setTimeout(() => {
-      yPos.value = withTiming(ContainerHeight/3, { duration: 350 });
+      yPos.value = withTiming(ContainerHeight/2.3, { duration: 350 });
       slideOpacity.value = withTiming(0.3, { duration: 350 });
     }, 1000 * 4);
 

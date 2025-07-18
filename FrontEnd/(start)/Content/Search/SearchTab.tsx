@@ -1,13 +1,21 @@
 import { View,StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import { Ionicons } from '@expo/vector-icons'
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { ModerateS, Hp } from "../../GlobalVars";
+import { ModerateS, Hp, SetUnsafeAreaBackgroundColor } from "../../GlobalVars";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SearchTab()
 {
+    const isFocused = useIsFocused();
+
     const inputRef = useRef<TextInput>(null);
     const [searchText, setSearchText] = useState('');
+
+    useEffect(() => {
+            if (isFocused)
+                SetUnsafeAreaBackgroundColor('cyan')
+        }, [isFocused]);
 
     return(
         <View style={styles.container}>

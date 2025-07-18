@@ -4,17 +4,21 @@ import Main from './(start)/Content/Main';
 import { NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthUserStore } from './store/authStore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { View, StatusBar, Platform } from 'react-native';
+import { SafeAreaInsetsContext, SafeAreaProvider , SafeAreaView, SafeAreaProviderProps} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import { UnsafeAreasRef, Width, Height, setSafeAreaSize } from './(start)/GlobalVars';
 
 const Stack = createNativeStackNavigator();
-import Toast from 'react-native-toast-message';
 
 export default function App() {
-
   
   const { authCheck } = useAuthUserStore();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+
 
   useEffect(() => {
     const restoreSession = async () => {
@@ -42,16 +46,33 @@ export default function App() {
     return null; // or a loading spinner
   }
 
-  return (  
+  StatusBar.setBarStyle('light-content');
+
+  console.log("FullView dimensions:", Width, Height);
+
+  return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={isAuthenticated ? "Main" : "Login"}>
-          <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-          <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}}/>
-          <Stack.Screen name="Main" component={Main} options={{headerShown: false}}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Toast position="top" topOffset={60} />
+      <SafeAreaProvider>
+      
+        <SafeAreaView 
+        ref={UnsafeAreasRef}
+        style={{ flex: 1,backgroundColor: '#7b668dff' }}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={isAuthenticated ? "Main" : "Login"}
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="SignUp" component={SignUp} />
+              <Stack.Screen name="Main" component={Main} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        <Toast position="top" topOffset={60}/>
+        </SafeAreaView>
+      
+      </SafeAreaProvider>
     </>
   );
 }

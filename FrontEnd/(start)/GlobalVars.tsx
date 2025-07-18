@@ -1,8 +1,11 @@
-import { Dimensions } from "react-native";
+import { Dimensions, SafeAreaView } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters"
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { createRef } from "react";
 
 const { width,height } = Dimensions.get("window");
+
+const unsafeAreasRef = createRef<SafeAreaView>();
 
 export type NavList = {
     Login: undefined,
@@ -21,3 +24,7 @@ export const Hp = hp;
 
 export const ModerateS = moderateScale;
 export const VerticalS = verticalScale;
+
+export const UnsafeAreasRef = unsafeAreasRef;
+
+export const SetUnsafeAreaBackgroundColor = function(color : string){ unsafeAreasRef.current.setNativeProps({style : {backgroundColor : color}}) }

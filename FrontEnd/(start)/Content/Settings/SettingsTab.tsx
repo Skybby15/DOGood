@@ -1,11 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, Pressable, TouchableOpacity } from "react-native"
 import { StyleSheet } from 'react-native';
 import MainContext from '../MainContext';
+import { useIsFocused } from '@react-navigation/native';
+
+import { Width, Height, Wp, Hp, UnsafeAreasRef } from '../../GlobalVars';
+
 export default function SettingsTab()
 {
+    const isFocused = useIsFocused();
+
     const { navigateToLogin , store } = useContext(MainContext);
     const { logout } = store;
+
+
+    useEffect(() => {
+        if (isFocused)
+            UnsafeAreasRef.current.setNativeProps({style: {backgroundColor: 'green'}})
+    }, [isFocused]);
 
     async function handleLogout() {
         await logout()

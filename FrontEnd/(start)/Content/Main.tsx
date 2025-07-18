@@ -67,6 +67,7 @@ export default function MainPage()
             <NavigationIndependentTree>
                 <NavigationContainer>
                     <Tab.Navigator id={undefined}
+                        initialRouteName="Settings"
                         tabBar={(props) => <CustomTabBar {...props} />}
                     >
                         <Tab.Screen name="Feed" component={FeedTab}
