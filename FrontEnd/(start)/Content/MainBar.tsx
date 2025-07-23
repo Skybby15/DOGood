@@ -103,9 +103,10 @@ const CustomTabBar = (props: BottomTabBarProps) => {
             cx={centerX}
             cy={centerY}
             r={Radius}
-            fill="#e100ff9a"
-            stroke="black"
+            fill="transparent"
+            stroke="#4949efff"
             strokeWidth={Wp(11)}
+
           />
         </Svg>
         <Animated.View
@@ -117,7 +118,7 @@ const CustomTabBar = (props: BottomTabBarProps) => {
           height: ContainerHeight * 2,
           justifyContent: "center",
           alignItems: "center",
-          overflow: 'hidden',
+
         },rotateAnimation]}>
         {/* Tab buttons positioned around the circle */}
         {tabs.map((tab, index) => {
@@ -150,7 +151,7 @@ const CustomTabBar = (props: BottomTabBarProps) => {
                   height: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                  overflow: "hidden",
+
                 }}
               >
                 {tabBarIcon && tabBarIcon({ focused: isFocused, color: "white", size: ModerateS(20) })}

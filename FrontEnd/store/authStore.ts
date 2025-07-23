@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SetFirebaseToken } from '../(start)/GlobalVars.ts';
+import { useUserProfileStore } from './profileStore.ts';
+import { auth } from './firebaseConfig';
+import { signInWithCustomToken } from 'firebase/auth';
 
 //in typescript trebuie sa fii precis 
 interface AuthUserStore {
@@ -73,10 +77,21 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
 
             //! Intrati in fisierul de envVars pentru a vede de unde e ip-ul si port-ul
             const response = await axios.post("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/login", credentials);
-            console.log("Token received: ", !!response.data.token);
+            console.log("JWT received: ", !!response.data.jwt);
+            console.log("Firebase token received: ", !!response.data.firebaseToken);
+            
+            
+            const firebaseToken = response.data.firebaseToken
+            SetFirebaseToken(firebaseToken);
+            signInWithCustomToken(auth,firebaseToken);
 
-            await AsyncStorage.setItem('token', response.data.token);
-            set({user: response.data.user, isLoggingIn: false});
+
+            await AsyncStorage.setItem('token', response.data.jwt);
+
+            const authUser = response.data.user;
+
+            set({user: authUser, isLoggingIn: false});
+            useUserProfileStore.getState().user = authUser;
         
         }catch(err){
             set({user: null, isLoggingIn: false});
@@ -103,7 +118,17 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             const response = await axios.get("http://"+ENV_VARS.SERVER_IP+":"+ENV_VARS.PORT+"/api/v1/auth/authenticate", {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            set({ user: response.data.user, isAuthenticating: false });
+
+            console.log("Firebase token received: ", !!response.data.firebaseToken);
+            
+            const firebaseToken = response.data.firebaseToken
+            SetFirebaseToken(firebaseToken);
+            signInWithCustomToken(auth,firebaseToken);
+
+            const authUser = response.data.user;
+
+            set({ user: authUser, isAuthenticating: false });
+            useUserProfileStore.getState().user = authUser;
         } catch (error) {
             console.error("Error authenticating user:", error);
             set({ isAuthenticating: false });

@@ -12,6 +12,8 @@ import ProfileContext from "./ProfileContext";
 import { NavigationContainer, createNavigationContainerRef, NavigationIndependentTree } from '@react-navigation/native';
 import { NavList } from '../../GlobalVars';
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { useUserProfileStore } from "../../../store/profileStore";
+import { profile } from "console";
 
 const navigationRef = createNavigationContainerRef<NavList>();
 const Stack = createBottomTabNavigator();
@@ -50,13 +52,24 @@ export default function ProfileTab() {
     }, 100);
   }
 
+  const profileStore = useUserProfileStore();
+  const { getProfilePic } = profileStore;
+
+  const res = getProfilePic();
+
+  const [profileURL, setProfileURL] = useState("")
+
+  res.then((string) => {setProfileURL(string)});
+
+  console.log("TEST");
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
         <Pressable>
           <ImageBackground
             style={styles.profilePic}
-            source={require('../../../assets/logo/ColorLogo.png')}
+            source={profileURL === "" ? null : { uri: profileURL }}
           />
         </Pressable>
         <View id='info' style={styles.infoText}>
@@ -117,7 +130,7 @@ export default function ProfileTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D1C4E9',
+    backgroundColor: '#b4a8e6ff',
   },
   topSection: {
     flex: 1,

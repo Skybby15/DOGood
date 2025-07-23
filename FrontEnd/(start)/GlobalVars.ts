@@ -28,3 +28,15 @@ export const VerticalS = verticalScale;
 export const UnsafeAreasRef = unsafeAreasRef;
 
 export const SetUnsafeAreaBackgroundColor = function(color : string){ unsafeAreasRef.current.setNativeProps({style : {backgroundColor : color}}) }
+
+export let FirebaseToken : string = "";
+
+export function SetFirebaseToken(token)
+{
+    FirebaseToken = token;
+}
+
+export function ClearFirebaseToken()
+{
+    FirebaseToken = "";
+}

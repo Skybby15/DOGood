@@ -12,11 +12,6 @@ export default function SearchTab()
     const inputRef = useRef<TextInput>(null);
     const [searchText, setSearchText] = useState('');
 
-    useEffect(() => {
-            if (isFocused)
-                SetUnsafeAreaBackgroundColor('cyan')
-        }, [isFocused]);
-
     return(
         <View style={styles.container}>
             <View style={styles.searchBar}>
@@ -48,7 +43,9 @@ export default function SearchTab()
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#A8B5DB',
+        backgroundColor: '#b4a8e6ff',
+
+        overflow:'visible'
     },
 
     searchBar: {

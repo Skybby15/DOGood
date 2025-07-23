@@ -15,6 +15,7 @@ import { lazy, useEffect } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useNavigationState } from '@react-navigation/native';
 import CustomTabBar from "./MainBar"; // Assuming you have a custom tab bar component
+import { FirebaseToken } from "../GlobalVars";
 
 import { useUserProfileStore } from "../../store/profileStore";
 
@@ -44,7 +45,7 @@ function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
             />
             <Ionicons
                 name={focused ? iconFocused : iconDeFocused}
-                color={'#e100ffea'} // was white
+                color={'#black'} // was white
                 size={25}
                 style={{ opacity: 1, zIndex: 1 }}
             />
@@ -158,7 +159,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         backgroundColor: 'transparent',
         borderRadius: 24,
-        overflow: 'hidden',
         
         width: Height/17,
         height: Height/17,

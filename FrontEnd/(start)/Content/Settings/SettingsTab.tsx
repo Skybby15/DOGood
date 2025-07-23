@@ -13,12 +13,6 @@ export default function SettingsTab()
     const { navigateToLogin , store } = useContext(MainContext);
     const { logout } = store;
 
-
-    useEffect(() => {
-        if (isFocused)
-            UnsafeAreasRef.current.setNativeProps({style: {backgroundColor: 'green'}})
-    }, [isFocused]);
-
     async function handleLogout() {
         await logout()
         .then(() => {
@@ -41,7 +35,7 @@ export default function SettingsTab()
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#A8B5DB',
+        backgroundColor: '#b4a8e6ff',
         flex:1,
         alignItems: 'center',
         justifyContent: 'center'

@@ -48,15 +48,14 @@ export default function App() {
 
   StatusBar.setBarStyle('light-content');
 
-  console.log("FullView dimensions:", Width, Height);
-
   return (
     <>
       <SafeAreaProvider>
       
         <SafeAreaView 
         ref={UnsafeAreasRef}
-        style={{ flex: 1,backgroundColor: '#7b668dff' }}>
+        
+        style={{ flex: 1,backgroundColor: 'black' }}>
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName={isAuthenticated ? "Main" : "Login"}
@@ -71,7 +70,6 @@ export default function App() {
           </NavigationContainer>
         <Toast position="top" topOffset={60}/>
         </SafeAreaView>
-      
       </SafeAreaProvider>
     </>
   );

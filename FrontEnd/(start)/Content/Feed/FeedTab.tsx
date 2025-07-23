@@ -12,7 +12,7 @@ export default function FeedTab()
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#A8B5DB',
+        backgroundColor: '#b4a8e6ff',
         flex:1,
         alignItems: 'center',
         justifyContent: 'center'
