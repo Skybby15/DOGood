@@ -21,6 +21,8 @@ const Stack = createBottomTabNavigator();
 const { width,height } = Dimensions.get("window");
 
 export default function ProfileTab() {
+  console.log("Rendering ProfileTab");
+
   const path = '../../../assets/caregivers.png'; // Adjust this dynamically as needed
   const [tabSelected, setTabSelected] = useState('Family');
 
@@ -52,16 +54,15 @@ export default function ProfileTab() {
     }, 100);
   }
 
-  const profileStore = useUserProfileStore();
-  const { getProfilePic } = profileStore;
-
-  const res = getProfilePic();
-
   const [profileURL, setProfileURL] = useState("")
-
-  res.then((string) => {setProfileURL(string)});
-
-  console.log("TEST");
+  const profileStore = useUserProfileStore();
+  
+  if(profileURL == "")
+  {
+    const { getProfilePic } = profileStore;
+    const res = getProfilePic();
+    res.then((string) => {setProfileURL(string)});
+  }
 
   return (
     <View style={styles.container}>

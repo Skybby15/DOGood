@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ref, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { storage } from './firebaseConfig';
+import { firestore } from './firebaseConfig'
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export interface UserProfileStore {
     //data attributes
@@ -29,20 +31,33 @@ export const useUserProfileStore = create<UserProfileStore>((set, get) => ({
     {
         const user = get().user;
 
+        console.log("Checking user");
         if(user == null)
         {
             console.error("No user was found!");
             return;
         }
 
-        const path = "ColorLogo.png"
-        const imageRef = ref(storage,path)
-        console.log("ImageRef:",imageRef);
+        console.log("Getting path");
+        const queryRes = query(
+            collection(firestore,"ProfilePics"),
+            where("UserID","==",user._id)
+        );
 
-        const downloadUrl = await getDownloadURL(imageRef);
+        const querySnapshot = await getDocs(queryRes);
 
-        console.log("URL DOWNLOADED:",downloadUrl);
-        return downloadUrl;
+        const imgPath = [];
+
+        querySnapshot.forEach((doc) => {
+            const data : string = doc.get("Path");
+            imgPath.push(data);
+        });
+
+        const imageRef = ref(storage,imgPath[0]);
+
+        console.log("Downloading image");
+        const profilePicURL = await getDownloadURL(imageRef);
+        return profilePicURL;
     },
 
     logout: async () => {

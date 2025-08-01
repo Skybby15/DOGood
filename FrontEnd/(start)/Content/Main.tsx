@@ -10,12 +10,11 @@ import PostTab from "./Post/PostTab";
 import ProfileTab from "./Profile/ProfileTab";
 import SearchTab from "./Search/SearchTab";
 import SettingsTab from "./Settings/SettingsTab";
-import { StyleSheet, View } from "react-native";
-import { lazy, useEffect } from "react";
+import { AppState, StatusBar, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useNavigationState } from '@react-navigation/native';
 import CustomTabBar from "./MainBar"; // Assuming you have a custom tab bar component
-import { FirebaseToken } from "../GlobalVars";
 
 import { useUserProfileStore } from "../../store/profileStore";
 
@@ -55,6 +54,7 @@ function TabIcon({focused,iconFocused,iconDeFocused,route} : any){
 
 export default function MainPage()
 {
+    const [appState, setAppState] = useState(AppState.currentState)
     const navigator = useNavigation<NavigationProp<NavList>>();
     const profileStore = useUserProfileStore();
 
@@ -63,12 +63,27 @@ export default function MainPage()
         navigator.navigate('Login')
     }
 
+    StatusBar.setBackgroundColor('#b4a8e6ff');
+    StatusBar.setBarStyle("dark-content");
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", nextAppState => {
+        setAppState(nextAppState);
+        });
+
+        return () => subscription.remove();
+    }, []);
+
+    useEffect(()=>{
+        StatusBar.setBackgroundColor('#b4a8e6ff',false); //just to be sure , i had a lot of bugs with StatusBar 
+    }, [appState])
+
     return (
         <MainContext.Provider value={{navigateToLogin, store: profileStore}} >
             <NavigationIndependentTree>
                 <NavigationContainer>
                     <Tab.Navigator id={undefined}
-                        initialRouteName="Settings"
+                        initialRouteName="Feed"
                         tabBar={(props) => <CustomTabBar {...props} />}
                     >
                         <Tab.Screen name="Feed" component={FeedTab}

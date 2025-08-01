@@ -1,4 +1,5 @@
 import { View,Text,StyleSheet } from "react-native";
+import { SetUnsafeAreaBackgroundColor } from "../../GlobalVars";
 
 
 export default function PostTab()

@@ -123,7 +123,7 @@ export const useAuthUserStore = create<AuthUserStore>((set)=>({
             
             const firebaseToken = response.data.firebaseToken
             SetFirebaseToken(firebaseToken);
-            signInWithCustomToken(auth,firebaseToken);
+            signInWithCustomToken(auth,firebaseToken).catch(err=>console.log(err));
 
             const authUser = response.data.user;
 
