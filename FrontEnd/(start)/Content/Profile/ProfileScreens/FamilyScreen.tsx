@@ -49,7 +49,7 @@ export default function FamilyScreen() {
                 Family 
             </Text>
             <FlatList data={familyMembers}
-            numColumns={2}
+            numColumns={3}
             key={1}
             keyExtractor={item=>item.id.toString()}
             renderItem={({item}) => {
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
         fontSize:25,
     },
     memberCard:{
-        width:width/2.5,
-        height:width/2.5,
-        margin: 8,
+        width:width/3.3,
+        height:width/3.3,
+        margin: 4,
 
         borderColor: 'black',
         borderWidth: 1,
-        borderRadius: 100,
+        borderRadius: 10,
 
         overflow:'hidden'
     },
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
         width:width/2.5,
         height:width/2.5,
 
-        transform: [{scale: 1.1}]
+        transform: [{scale: 1}]
     }
 })

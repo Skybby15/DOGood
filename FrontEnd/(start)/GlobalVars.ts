@@ -40,3 +40,5 @@ export function ClearFirebaseToken()
 {
     FirebaseToken = "";
 }
+
+export const colorSet : string[] = ['#b4a8e6ff','#4949efff','#000000']
