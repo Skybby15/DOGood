@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
+import { Firebase } from "../config/firebase.js";
 import { signupAuth, loginAuth} from "../services/auth.service.js";
 import logger from "../config/logger.js";
 import protectRoute from "../middleware/protectRoute.js";
@@ -50,12 +51,23 @@ export async function login(req, res)
         return res.status(400).json({success:false, message:error.message});
     }
 
-    let token;
+    let JWToken;
 
     try{
-        token = generateToken(user._id);
+        JWToken = generateToken(user.id);
     }catch(error){
         logger.error({error: error.message},"Error in token generation");
+        return res.status(500).json({success:false, message:"Internal server error"});
+    }
+
+    let firebaseToken;
+
+    try
+    {
+        firebaseToken = await Firebase.auth().createCustomToken(user.id)
+    }catch(error)
+    {
+        logger.error({error: error.message},"Error in firebase token generation");
         return res.status(500).json({success:false, message:"Internal server error"});
     }
 
@@ -65,7 +77,8 @@ export async function login(req, res)
             ...user._doc,
             password:"" ,
         },
-        token: token
+        jwt: JWToken,
+        firebaseToken: firebaseToken
     })
 }
 
@@ -93,12 +106,25 @@ export async function authenticateUser(req,res)
 
     protectRoute(req, res, async () => {
         logger.info("User profile retrieved successfully.");
+
+        let firebaseToken;
+
+        try
+        {
+            firebaseToken = await Firebase.auth().createCustomToken(req.user.id)
+        }catch(error)
+        {
+            logger.error({error: error.message},"Error in firebase token generation");
+            return res.status(500).json({success:false, message:"Internal server error"});
+        }
+
         return res.status(200).json({
             success: true,
             user: {
                 ...req.user._doc,
                 password: "" 
-            }
+            },
+            firebaseToken:firebaseToken
         });
     });
 

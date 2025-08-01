@@ -67,6 +67,6 @@ export async function loginAuth(credentials) {
         throw new Error("Invalid credentials");
     }
 
-    logger.info({userid: user._id},"LoginAuth exiting successfully for user id : ");
+    logger.info({userid: user._id},"LoginAuth exiting successfully");
     return user;
 }

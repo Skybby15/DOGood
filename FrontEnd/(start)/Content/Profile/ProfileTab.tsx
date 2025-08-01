@@ -12,6 +12,8 @@ import ProfileContext from "./ProfileContext";
 import { NavigationContainer, createNavigationContainerRef, NavigationIndependentTree } from '@react-navigation/native';
 import { NavList } from '../../GlobalVars';
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { useUserProfileStore } from "../../../store/profileStore";
+import { profile } from "console";
 
 const navigationRef = createNavigationContainerRef<NavList>();
 const Stack = createBottomTabNavigator();
@@ -19,6 +21,8 @@ const Stack = createBottomTabNavigator();
 const { width,height } = Dimensions.get("window");
 
 export default function ProfileTab() {
+  console.log("Rendering ProfileTab");
+
   const path = '../../../assets/caregivers.png'; // Adjust this dynamically as needed
   const [tabSelected, setTabSelected] = useState('Family');
 
@@ -50,13 +54,23 @@ export default function ProfileTab() {
     }, 100);
   }
 
+  const [profileURL, setProfileURL] = useState("")
+  const profileStore = useUserProfileStore();
+  
+  if(profileURL == "")
+  {
+    const { getProfilePic } = profileStore;
+    const res = getProfilePic();
+    res.then((string) => {setProfileURL(string)});
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
         <Pressable>
           <ImageBackground
             style={styles.profilePic}
-            source={require('../../../assets/logo/ColorLogo.png')}
+            source={profileURL === "" ? null : { uri: profileURL }}
           />
         </Pressable>
         <View id='info' style={styles.infoText}>
@@ -117,7 +131,7 @@ export default function ProfileTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D1C4E9',
+    backgroundColor: '#b4a8e6ff',
   },
   topSection: {
     flex: 1,

@@ -1,4 +1,5 @@
 import { View,Text,StyleSheet } from "react-native";
+import { SetUnsafeAreaBackgroundColor } from "../../GlobalVars";
 
 
 export default function PostTab()
@@ -12,7 +13,7 @@ export default function PostTab()
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#A8B5DB',
+        backgroundColor: '#b4a8e6ff',
         flex:1,
         alignItems: 'center',
         justifyContent: 'center'
