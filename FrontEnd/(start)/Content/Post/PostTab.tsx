@@ -5,8 +5,9 @@ import { SetUnsafeAreaBackgroundColor } from "../../GlobalVars";
 export default function PostTab()
 {
     return(
+
         <View style={styles.container}>
-            <Text> Post Tab</Text>
+            <Text> Post Tab Work Started</Text>
         </View>
     );
 }
