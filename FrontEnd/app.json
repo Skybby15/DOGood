@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion":"53.0.0",
+    "sdkVersion": "53.0.0",
     "name": "DOGood",
     "slug": "FrontEnd",
     "version": "1.0.0",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/logo/Colorful-Logo-Transparent.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "44b43ccc-96a1-4a62-acfb-e5496f603163"
+      }
+    },
+    "owner": "skybby"
   }
 }
