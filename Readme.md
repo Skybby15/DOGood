@@ -1,13 +1,17 @@
-Proiect MPP
+DOGood : social media application for shelters and pet owners.
+Mobile application for Android and IOS users. 
+Created using React Native with Expo , Javascript + Typescript
+BackEnd and FrontEnd should be separated into separate projects in the future,
+The application uses MongoDB for data storage and Firebase for any image storage
 
-npx expo start -> start la frontend
-npm run dev -> start la backend
+Use npm install for project initialization in Backend and Frontend,
+"npm run dev" starts Backend
+"npx expo start" starts Frontend 
 
-npm install -> daca nu ai node_modules sau da alte erori
+Test account (added in MongoDB) 
+email : "test@gmail.com"
+password : "Pass"
 
-daca din intamplare jumate din cod apare cu eroare , DAR npx expo start merge si nu da runtime error , 
-sterge "extends": "expo/tsconfig.base" din tsconfig.json in FrontEnd si ruleaza iar npx expo start
 
-cont de test sa nu va chinuiti : 
-email: test@gmail.com 
-parola: Pass
+
+
