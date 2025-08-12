@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ref, getDownloadURL, listAll } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from './firebaseConfig';
 import { firestore } from './firebaseConfig'
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 export interface UserProfileStore {
     //data attributes
@@ -16,6 +16,7 @@ export interface UserProfileStore {
 
     //methods
     getProfilePic: () => Promise<string>;
+    postImage: (imageUri: string) => Promise<void>;
     logout: () => Promise<void>;
 
 
@@ -58,6 +59,37 @@ export const useUserProfileStore = create<UserProfileStore>((set, get) => ({
         console.log("Downloading image");
         const profilePicURL = await getDownloadURL(imageRef);
         return profilePicURL;
+    },
+
+    postImage: async (imageUri: string) => {
+        console.log("entering with imageUri:", imageUri);
+        if(imageUri == null || imageUri === "")
+        {
+            console.error("No image URI provided");
+            return;
+        }
+
+        if(get().user == null)
+        {
+            console.error("No user is logged in");
+            return;
+        }
+
+        const response = await fetch(imageUri);
+        const blob = await response.blob();
+
+        const path = `users/${get().user._id}/postedImages/${Date.now()}.jpg`;
+        const storageRef = ref(storage, path);
+
+        await uploadBytes(storageRef, blob);
+
+        await addDoc(collection(firestore, "PostedImages"), {
+            Path: path,
+            UserID: get().user._id,
+        });
+
+        //const downloadURL = await getDownloadURL(storageRef);
+        //console.log("Uploaded & got URL:", downloadURL);
     },
 
     logout: async () => {
