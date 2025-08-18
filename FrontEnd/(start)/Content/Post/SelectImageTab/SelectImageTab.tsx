@@ -103,6 +103,8 @@ export default function SelectImageTab() {
   // For selected images row
   const selectedImagesArray = Array.from(imagesSelectedSet);
 
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.topText}>New post</Text>
