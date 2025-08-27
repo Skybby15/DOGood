@@ -10,7 +10,7 @@ type PreviewTabRouteProp = RouteProp<PostNavList, 'Preview'>;
 
 export default function PreviewTab({ route }: { route: PreviewTabRouteProp })
 {
-    const imageUri = route.params.imageUri;
+    const imageUri = route.params.imageUriList[0];
     const { postImage } = useUserProfileStore();
 
     const handlePostImage = async () => {

@@ -6,9 +6,9 @@ import { requestCameraPermissionsAsync, launchCameraAsync } from 'expo-image-pic
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { PostNavList } from "../PostTypes";
+import Toast from "react-native-toast-message";
 
 export default function SelectImageTab() {
-  const [imageSelected, setImageSelected] = useState<string | null>(null);
   const [imagesSelectedSet, setImagesSelectedSet] = useState<Set<string>>(new Set());
   const [isSelectingMultiple, setIsSelectingMultiple] = useState(false);
   const [media, setMedia] = useState<any[]>([]);
@@ -52,7 +52,11 @@ export default function SelectImageTab() {
 
     const result = await launchCameraAsync();
     if (result.assets && result.assets.length > 0) {
-      setImageSelected(result.assets[0].uri);
+      setImagesSelectedSet(prev => {
+        const newSet = new Set(prev);
+        newSet.add(result.assets[0].uri);
+        return newSet;
+      });
     }
   }, []);
 
@@ -69,16 +73,15 @@ export default function SelectImageTab() {
     });
   }, []);
 
-  const handlePress = useCallback((item: any) => {
+  const handleImagePress = useCallback((item: any) => {
     if (isSelectingMultiple) {
       handleSelectImage(item.uri);
     } else {
-      setImageSelected(item.uri);
-      navigator.navigate("Preview", { imageUri: item.uri });
+      navigator.navigate("Preview", { imageUriList: [item.uri] });
     }
   }, [isSelectingMultiple, handleSelectImage, navigator]);
 
-  const handleLongPress = useCallback((item: any) => {
+  const handleImageLongPress = useCallback((item: any) => {
     setIsSelectingMultiple(true);
     setImagesSelectedSet(prev => new Set(prev).add(item.uri));
   }, []);
@@ -100,10 +103,27 @@ export default function SelectImageTab() {
     });
   }, []);
 
+  const handlePressSetting = useCallback(() => {
+    Toast.show({
+        type: 'error',
+        text1: 'Settings has not been implemented yet ',
+        });
+  }, []);
+
+  const handleNextButtonPress = useCallback(() => {
+    if (selectedImagesArray.length === 0) {
+      Toast.show({
+        type: 'error',
+        text1: 'No image was selected.',
+      });
+      return;
+    }
+
+    navigator.navigate('Preview', { imageUriList: Array.from(imagesSelectedSet) });
+  }, [imagesSelectedSet, navigator]);
+
   // For selected images row
   const selectedImagesArray = Array.from(imagesSelectedSet);
-
-  
 
   return (
     <View style={styles.container}>
@@ -112,13 +132,35 @@ export default function SelectImageTab() {
         <Ionicons name='camera' size={ModerateS(34)} color={colorSet[1]} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.nextButton, { opacity: imageSelected == null ? 0.4 : 1 }]}
-        onPress={() => navigator.navigate("Preview", { imageUri: imageSelected })}
-        disabled={imageSelected == null}
+        style={styles.settingsButton}
+        onPress={handlePressSetting}
         activeOpacity={0.4}
       >
-        <Ionicons name='arrow-forward' size={ModerateS(34)} color={colorSet[1]} />
+        <Ionicons name='settings' size={ModerateS(34)} color={colorSet[1]} />
       </TouchableOpacity>
+      {
+        selectedImagesArray.length === 0 && (
+          <Text style={styles.selectedImagesText}>Press on an image or hold to select multiple.</Text>
+        ) ||
+
+        selectedImagesArray.length !== 0 && (
+          <>
+            { 
+              selectedImagesArray.length === 1 && (
+                <Text style={styles.selectedImagesText}>Selected {selectedImagesArray.length} image.</Text>
+              )
+            }
+            { 
+              selectedImagesArray.length !== 1 && (
+                <Text style={styles.selectedImagesText}>Selected {selectedImagesArray.length} images.</Text>
+              )
+            }
+            <TouchableOpacity style={styles.nextButton} onPress={handleNextButtonPress}>
+              <Ionicons name='arrow-forward' size={ModerateS(20)} color={colorSet[1]} />
+            </TouchableOpacity>
+          </>
+        )
+      }
       <View style={styles.galleryList}>
         {selectedImagesArray.length !== 0 && (
           <View style={styles.selectedImagesContainer}>
@@ -151,8 +193,8 @@ export default function SelectImageTab() {
 
             return(
               <TouchableOpacity 
-                onPress={() => handlePress(item)}
-                onLongPress={() => handleLongPress(item)}
+                onPress={() => handleImagePress(item)}
+                onLongPress={() => handleImageLongPress(item)}
                 delayLongPress={250}>
                   
                 {isSelectingMultiple && (
@@ -189,6 +231,36 @@ const styles = StyleSheet.create({
     width: ModerateS(120),
     fontSize: ModerateS(18),
     fontWeight: 'bold',
+  },
+
+  selectedImagesText: {
+    position:'absolute',
+    top: Hp(11.85),
+    left: Wp(2),
+    textAlign: 'left',
+    width: ModerateS(333),
+    
+    color: colorSet[1],
+    fontSize: ModerateS(16),
+
+  },
+
+  nextButton: {
+    position:'absolute',
+    top: Hp(11.7),
+    right: Wp(2.5),
+
+    width: ModerateS(45),
+    height: ModerateS(22),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    color: colorSet[2],
+    fontSize: ModerateS(14),
+
+    borderWidth: 1,
+    borderRadius: ModerateS(25),
+    borderColor: colorSet[1],
   },
 
   selectedImagesContainer: {
@@ -241,25 +313,25 @@ const styles = StyleSheet.create({
   cameraButton: {
     width: Wp(15),
     height: Hp(5),
-    zIndex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
+
     position: 'absolute',
     top: Hp(0),
     left: Wp(1),
   },
 
-  nextButton: {
-    width: Wp(11),
+  settingsButton: {
+    width: Wp(15),
     height: Hp(5),
+
     justifyContent: 'center',
     alignItems: 'center',
+
     position: 'absolute',
     top: Hp(0),
-    right: Wp(2),
-    borderRadius: ModerateS(150),
-    borderColor: '#2600ffff',
-    borderWidth: 1,
+    right: Wp(1),
   },
 
   galleryList: {

@@ -39,7 +39,7 @@ export const useUserProfileStore = create<UserProfileStore>((set, get) => ({
             return;
         }
 
-        console.log("Getting path");
+        console.log("Getting path ", user._id);
         const queryRes = query(
             collection(firestore,"ProfilePics"),
             where("UserID","==",user._id)
@@ -52,6 +52,7 @@ export const useUserProfileStore = create<UserProfileStore>((set, get) => ({
         querySnapshot.forEach((doc) => {
             const data : string = doc.get("Path");
             imgPath.push(data);
+            console.log("Path taken: ", data);
         });
 
         const imageRef = ref(storage,imgPath[0]);
