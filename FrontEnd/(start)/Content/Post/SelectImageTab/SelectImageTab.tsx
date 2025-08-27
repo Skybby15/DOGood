@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
     left: Wp(2),
     textAlign: 'left',
     width: ModerateS(333),
+
     
     
     color: colorSet[1],
