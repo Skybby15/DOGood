@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width: ModerateS(333),
     
+    
     color: colorSet[1],
     fontSize: ModerateS(16),
 
